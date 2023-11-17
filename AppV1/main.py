@@ -2,10 +2,10 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
-from langchain.agents import create_pandas_dataframe_agent
+from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
 from langchain.llms import OpenAI
 import os
-from  apikey import apikey
+from apikey import apikey
 
 # Define OpenAI API KEY
 os.environ['OPENAI_API_KEY'] = apikey

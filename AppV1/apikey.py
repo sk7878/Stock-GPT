@@ -1,1 +1,1 @@
-apikey="OpenAI API KEY GOES HERE"
+apikey="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"

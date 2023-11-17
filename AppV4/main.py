@@ -1,7 +1,8 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
-from langchain.agents import create_pandas_dataframe_agent
+from langchain.agents import AgentType
+from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
 from langchain.chat_models import ChatOpenAI
 import re
 from dotenv import load_dotenv
@@ -180,14 +181,15 @@ def main():
                 with st.spinner('Generating response...'):
                     try:
                         agent = create_pandas_dataframe_agent(
-                            ChatOpenAI(temperature=chatbot_temp, model='gpt-4'),
+                            ChatOpenAI(temperature=chatbot_temp, model='gpt-3.5-turbo'),
                             pd.DataFrame(df),
-                            verbose=True
+                            verbose=True,
+                            agent_type=AgentType.OPENAI_FUNCTIONS,
+                            handle_parsing_errors=True
                         )
-
                         answer = agent.run(chat_prompt)
-                        st.session_state.chat_history.append(f"USER: {query}\n")
                         st.session_state.chat_history.append(f"AI: {answer}\n")
+                        st.session_state.chat_history.append(f"USER: {query}\n")
                         display_convo()
 
                     except Exception as e:
